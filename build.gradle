@@ -1,0 +1,119 @@
+plugins {
+    id 'java'
+    id 'com.azuredoom.hytale-tools' version '1.0.38'
+    id 'com.azuredoom.hytalepublisher' version '1.1.9'
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url "https://www.cursemaven.com" }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of((project.java_version as String).toInteger())
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+base {
+    archivesName = 'Configly'
+}
+
+configurations {
+    testCompileOnly.extendsFrom(compileOnly)
+    testRuntimeOnly.extendsFrom(compileOnly)
+}
+
+dependencies {
+    compileOnly libs.jetbrains.annotations
+    compileOnly libs.jspecify
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.3'
+}
+
+hytaleTools {
+    javaVersion = project.java_version as Integer
+    hytaleVersion = project.hytale_version.toString()
+    manifestServerVersion = project.manifestServerVersion.toString()
+    manifestGroup = project.manifest_group.toString()
+    modId = project.mod_id.toString()
+    modDescription = project.mod_description.toString()
+    modUrl = project.mod_url.toString()
+    mainClass = project.main_class.toString()
+    modCredits = project.mod_credits.toString()
+    manifestDependencies = project.manifest_dependencies.toString()
+    manifestOptionalDependencies = project.manifest_opt_dependencies.toString()
+    curseforgeId = project.curseforgeID.toString()
+    disabledByDefault = project.disabled_by_default.toString().toBoolean()
+    includesPack = project.includes_pack.toString().toBoolean()
+    patchline = project.patchline.toString()
+
+    debugEnabled = true
+    debugSuspend = false
+
+    requireDcevm = true
+} 
+
+hytalePublisher {
+    version       = project.version
+    releaseType   = "release"
+    changelogFile = "changelog.md"
+    gameVersion   = project.hytale_version.toString()
+
+    modtale {
+        enabled   = true
+        projectId = project.modtale_uuid
+        patchline = project.patchline.toString()
+    }
+
+    curseforge {
+        enabled   = true
+        projectId = project.curseforgeID
+    }
+
+    modifold {
+        enabled   = true
+        projectId = project.modifold_id
+    }
+    github {
+        enabled = true
+
+        // Let GitHub append its auto-generated notes after the changelog body.
+        generateReleaseNotes = true
+        // Attach the built jar, sources jar, and javadoc jar. Sources/javadoc are
+        // skipped automatically (with a warning) if those tasks aren't present.
+        includeJar        = true
+        includeSourcesJar = true
+        includeJavadocJar = true    
+    }
+}
+
+def generateVersionSource = tasks.register('generateVersionSource') {
+    def outputDir = layout.buildDirectory.dir('generated/sources/configlyVersion')
+    def pluginVersion = project.version.toString()
+    inputs.property('pluginVersion', pluginVersion)
+    outputs.dir(outputDir)
+    doLast {
+        def pkg = outputDir.get().dir('com/riprod/configly').asFile
+        pkg.mkdirs()
+        new File(pkg, 'BuildInfo.java').text = """package com.riprod.configly;
+
+public final class BuildInfo {
+    public static final String VERSION = "${pluginVersion}";
+
+    private BuildInfo() {
+    }
+}
+"""
+    }
+}
+
+sourceSets.main.java.srcDir(generateVersionSource)
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

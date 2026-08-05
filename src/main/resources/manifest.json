@@ -1,0 +1,25 @@
+{
+    "Group": "Riprod",
+    "Name": "Configly",
+    "Version": "1.0.0",
+    "Description": "Mod-wide configuration files for Hytale mods",
+    "Authors": [
+        {
+            "Name": "Riprod"
+        }
+    ],
+    "Website": "https://modtale.net/mod/configly",
+    "ServerVersion": ">=0.5.0 <0.6.0",
+    "Dependencies": {
+        
+    },
+    "OptionalDependencies": {
+        
+    },
+    "DisabledByDefault": false,
+    "Main": "com.riprod.configly.ConfiglyPlugin",
+    "IncludesAssetPack": true,
+    "UpdateChecker": {
+        "CurseForge": ""
+    }
+}
