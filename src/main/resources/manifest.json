@@ -20,6 +20,6 @@
     "Main": "com.riprod.configly.ConfiglyPlugin",
     "IncludesAssetPack": true,
     "UpdateChecker": {
-        "CurseForge": ""
+        "CurseForge": "1640076"
     }
 }
