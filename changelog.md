@@ -1,3 +1,6 @@
+# v1.0.1
+Updated to use CI/CD publishing
+
 # v1.0.0
 
 Initial release.
