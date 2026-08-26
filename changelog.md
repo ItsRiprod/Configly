@@ -1,3 +1,11 @@
+# v1.0.2
+
+Updated configly to correctly be MIT
+
+Updated configly to support Update 6
+Note: it will continue to error until update 6 fully releases due to semver issues
+
+
 # v1.0.1
 Updated to use CI/CD publishing
 
