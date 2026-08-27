@@ -1,3 +1,7 @@
+# v1.1.0
+
+Updated to Update 6
+
 # v1.0.2
 
 Updated configly to correctly be MIT

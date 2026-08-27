@@ -1,7 +1,7 @@
 {
     "Group": "Riprod",
     "Name": "Configly",
-    "Version": "1.0.2",
+    "Version": "1.1.0",
     "Description": "Mod-wide configuration files for Hytale mods",
     "Authors": [
         {
@@ -9,7 +9,7 @@
         }
     ],
     "Website": "https://modtale.net/mod/configly",
-    "ServerVersion": ">=0.5.0 <0.7.0",
+    "ServerVersion": ">=0.6.0 <0.7.0",
     "Dependencies": {
         
     },
