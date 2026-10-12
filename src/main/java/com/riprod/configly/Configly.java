@@ -13,6 +13,7 @@ import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -28,7 +29,6 @@ public final class Configly {
     private Configly() {
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T extends Config> void register(@Nonnull String type, @Nonnull Class<T> clazz, @Nonnull BuilderCodec<T> codec) {
         ((AssetCodecMapCodec) mapCodec()).register(type, clazz, codec);
         LOGGER.at(Level.FINE).log("Registered config type '%s' for %s", type, clazz.getName());
@@ -51,7 +51,6 @@ public final class Configly {
     }
 
     @Nonnull
-    @SuppressWarnings("rawtypes")
     private static AssetMap assetMap() {
         return store().getAssetMap();
     }
@@ -95,12 +94,10 @@ public final class Configly {
     // these run against every loaded config, including leaves from other shaded copies. declaring
     // the lambda over Object keeps the checkcast out of its bridge method; the cast below applies
     // to the function object, not the config, so it is a runtime no-op
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private static <A, B> BiConsumer<A, B> setter(BiConsumer<Object, Object> raw) {
         return (BiConsumer) raw;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private static <A, B> Function<A, B> getter(Function<Object, Object> raw) {
         return (Function) raw;
     }
@@ -108,7 +105,6 @@ public final class Configly {
     // copies find each other through the engine's store map. relocation rewrites packages but
     // never simple names, so the marker matches across shaded copies
     @Nullable
-    @SuppressWarnings("unchecked")
     private static AssetStore<String, ?, ?> find() {
         for (var candidate : AssetRegistry.getStoreMap().values()) {
             if (STORE_PATH.equals(candidate.getPath()) && STORE_MARKER.equals(candidate.getAssetClass().getSimpleName())) {

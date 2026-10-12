@@ -1,3 +1,7 @@
+# v1.2.0
+
+Updated to Update 7
+
 # v1.1.0
 
 Updated to Update 6
